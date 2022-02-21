@@ -1,4 +1,4 @@
-export function renderFamilies(family) {
+export function renderFamily(family) {
     const div = document.createElement('div');
     div.classList.add('family');
     const p = document.createElement('p');
