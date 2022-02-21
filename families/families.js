@@ -10,6 +10,7 @@ logoutButton.addEventListener('click', () => {
     logout();
 });
 const familiesList = document.getElementById('families-list');
+
 async function displayFamilies() {
     familiesEl.textContent = '';
     // fetch families from supabase

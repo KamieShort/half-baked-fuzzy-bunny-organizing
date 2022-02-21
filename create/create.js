@@ -22,13 +22,13 @@ form.addEventListener('submit', async (e) => {
 window.addEventListener('load', async () => {
     const selectElem = document.getElementById('family-id');
     const families = await getFamilies();
+    console.log(selectElem);
     for (let family of families) {
         const option = document.createElement('option');
         option.value = family.id;
         option.label = family.name;
         selectElem.append(option);
     }
-
     // let's dynamically fill in the families dropdown from supabase
     // grab the select HTML element from the DOM
     // go get the families from supabase
