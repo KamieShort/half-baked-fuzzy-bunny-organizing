@@ -9,8 +9,8 @@ form.addEventListener('submit', async (e) => {
     // get the name and family id from the form
     const data = new FormData(form);
     const bunny = {
-        family_id: data.get('family'),
-        name: data.get('name'),
+        family_id: data.get('family-id'),
+        name: data.get('bunny-name'),
     };
     await createBunny(bunny);
     location.replace('../families');
