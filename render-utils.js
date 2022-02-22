@@ -8,9 +8,9 @@
 //     return div;
 // }
 
-// export function renderBunny(bunny) {
-//     const p = document.createElement('p');
-//     p.classList.add('bunny');
-//     p.textContent = bunny.name;
-//     return p;
-// }
+export function renderBunny(bunny) {
+    const p = document.createElement('p');
+    p.classList.add('bunny');
+    p.textContent = bunny.name;
+    return p;
+}
