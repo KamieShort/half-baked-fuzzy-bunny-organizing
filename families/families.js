@@ -1,5 +1,5 @@
 import { checkAuth, deleteBunny, getFamilies, logout } from '../fetch-utils.js';
-import { renderBunny, renderFamily } from '../render-utils.js';
+import { renderBunny } from '../render-utils.js';
 
 checkAuth();
 
@@ -9,7 +9,7 @@ const logoutButton = document.getElementById('logout');
 logoutButton.addEventListener('click', () => {
     logout();
 });
-const familiesList = document.getElementById('families-list');
+// const familiesList = document.getElementById('families-list');
 
 async function displayFamilies() {
     familiesEl.textContent = '';
@@ -19,19 +19,38 @@ async function displayFamilies() {
     // clear out the familiesEl
 
     for (let family of families) {
-        familiesEl.append(renderFamily(family));
+        // familiesEl.append(renderFamily(family));
+        const familyEl = document.createElement('div');
+        const nameEl = document.createElement('p');
+        const bunniesEl = document.createElement('div');
+
+        bunniesEl.classList.add('bunnies');
+        familyEl.classList.add('family');
+
+        nameEl.textContent = family.name;
 
         for (let bunny of family.fuzzy_bunnies) {
             const bunnyEl = renderBunny(bunny);
 
-            familiesEl.append(bunnyEl);
+            bunnyEl.classList.add('bunny');
+            bunnyEl.textContent = bunny.name;
+
+            bunnyEl.addEventListener('click', async () => {
+                await deleteBunny(bunny.id);
+
+                const newFamilies = await getFamilies();
+
+                displayFamilies(newFamilies);
+            });
+            bunniesEl.append(bunnyEl);
         }
 
-        familiesList.append(familiesEl);
+        familyEl.append(nameEl, bunniesEl);
+        familiesEl.append(familyEl);
     }
 }
 
-displayFamilies();
+// displayFamilies();
 // create three elements for each family, one for the whole family, one to hold the name, and one to hold the bunnies
 // your HTML Element should look like this:
 // <div class="family">
