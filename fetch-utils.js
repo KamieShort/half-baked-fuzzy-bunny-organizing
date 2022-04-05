@@ -1,6 +1,7 @@
 // Create your own supabase database using the provided seeds.sql file
-const SUPABASE_URL = '';
-const SUPABASE_KEY = '';
+const SUPABASE_URL = 'https://egdrvheseyhayxbahrri.supabase.co';
+const SUPABASE_KEY =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnZHJ2aGVzZXloYXl4YmFocnJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDQ4ODE3MTMsImV4cCI6MTk2MDQ1NzcxM30.9epFpiRNgk8RIyWEaIJUu1on7JQXBpyH2ROvOPGlajE';
 
 const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -10,23 +11,28 @@ export function getUser() {
 
 export async function getFamilies() {
     // fetch all families and their bunnies
+    const resp = await client.from('loving_families').select(`*, fuzzy_bunnies (*)`);
 
-    return checkError(response);
+    return checkError(resp);
 }
 
 export async function deleteBunny(id) {
     // delete a single bunny using the id argument
+    const resp = await client.from('fuzzy_bunnies').delete().match({ id: id }).single();
 
-    return checkError(response);
+    return checkError(resp);
 }
 
 export async function createBunny(bunny) {
     // create a bunny using the bunny argument
-
-    return checkError(response);
+    const resp = await client
+        .from('fuzzy_bunnies')
+        .insert({ name: bunny.name, family_id: bunny.family_id });
+    return checkError(resp);
 }
+// console.log(bunny);
 
-// MARTHA STEWART (PRE-MADE) FUNCTIONS
+// (PRE-MADE) FUNCTIONS
 
 export async function checkAuth() {
     const user = getUser();
